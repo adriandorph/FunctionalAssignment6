@@ -49,7 +49,7 @@
         S (fun s -> Success ((), {s with vars = List.tail s.vars}))
 
     let wordLength : SM<int> = 
-        S (fun s ->Success (s.word.Length, s))
+        S (fun s -> Success (s.word.Length, s))
 
     let characterValue (pos : int) : SM<char> = 
         S (fun s -> 
@@ -77,6 +77,24 @@
               | Some v -> Success (v, s)
               | None   -> Failure (VarNotFound x))
 
-    let declare (var : string) : SM<unit> = failwith "Not implemented"
+    let declare (var : string) : SM<unit> = 
+        S (fun s ->
+            match s with
+            | s when s.vars = [] -> Failure (VarNotFound "s.vars is empty")
+            | s when s.reserved.Contains(var) -> Failure (ReservedName var)
+            | s when s.vars.[0].ContainsKey(var) -> Failure (VarExists var)
+            | _ -> Success (() ,{s with vars = (s.vars.[0].Add(var, 0)) :: List.tail s.vars}))
 
-    let update (var : string) (value : int) : SM<unit> = failwith "Not implemented"
+    let update (var : string) (value : int) : SM<unit> =
+        let rec aux (revised: Map<string, 'b> list) notRevised =
+            match notRevised with
+            | []      -> (None, List.Empty)
+            | m :: ms -> 
+                match Map.tryFind var m with
+                | Some v -> (Some v, revised @ ((Map.add var value m) :: ms))
+                | _  -> aux (revised @ [m]) ms
+
+        S (fun s -> 
+              match aux List.Empty (s.vars) with
+              | (Some _, m) -> Success ((), {s with vars = m})
+              | (None, _)   -> Failure (VarNotFound (var)))
