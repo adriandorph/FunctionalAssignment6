@@ -23,6 +23,7 @@ let main argv =
                   evalSM state)
     printfn ""
 
+(*
     printfn "Testing update:"
     printfn "%A" (update "x" 7 >>>= lookup "x" |> 
                   evalSM state)
@@ -63,6 +64,7 @@ let main argv =
     printfn "%A" (declare "_pos_" >>>= lookup "_pos_" |> 
                   evalSM state)
     printfn ""
+    *)
 
     printfn "Testing wordLength:"
     printfn "%A" (wordLength |> 
@@ -98,7 +100,7 @@ let main argv =
                   evalSM state)
     printfn ""
 
-
+(*
     printfn "Testing div:"
     printfn "%A" (div (ret 7) (ret 5)  |> 
                   evalSM state)
@@ -109,6 +111,8 @@ let main argv =
     printfn "%A" (declare "z" >>>= div (lookup "x") (lookup "z")  |> 
                   evalSM state)
     printfn ""
+
+    *)
 
 
     printfn "Testing arithEval:"

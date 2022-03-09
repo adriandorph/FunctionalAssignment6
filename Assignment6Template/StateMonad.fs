@@ -49,10 +49,19 @@
         S (fun s -> Success ((), {s with vars = List.tail s.vars}))
 
     let wordLength : SM<int> = 
+        S (fun s ->Success (s.word.Length, s))
 
-    let characterValue (pos : int) : SM<char> = failwith "Not implemented"      
+    let characterValue (pos : int) : SM<char> = 
+        S (fun s -> 
+        match s with
+        | s when pos >= s.word.Length || pos < 0 -> Failure (IndexOutOfBounds pos)
+        | s -> Success (fst(s.word.[pos]), s))
 
-    let pointValue (pos : int) : SM<int> = failwith "Not implemented"      
+    let pointValue (pos : int) : SM<int> =
+        S (fun s -> 
+        match s with
+        | s when pos >= s.word.Length || pos < 0 -> Failure (IndexOutOfBounds pos)
+        | s -> Success (snd(s.word.[pos]), s))
 
     let lookup (x : string) : SM<int> = 
         let rec aux =
@@ -68,8 +77,6 @@
               | Some v -> Success (v, s)
               | None   -> Failure (VarNotFound x))
 
-    let declare (var : string) : SM<unit> = failwith "Not implemented"   
-    let update (var : string) (value : int) : SM<unit> = failwith "Not implemented"      
-              
+    let declare (var : string) : SM<unit> = failwith "Not implemented"
 
-    
+    let update (var : string) (value : int) : SM<unit> = failwith "Not implemented"
