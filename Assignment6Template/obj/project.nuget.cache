@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "Xmd/OAv8lZYfzohbYIMgOOovuTMydynNeBAACD95u1CYwSndgLm3Td0xusDsCIjCPV+VMdAL2AJ9POqnA4oB0w==",
+  "success": true,
+  "projectFilePath": "/Users/adrian/Documents/ITU/4. Semester/Funktionel Programmering/Assignments/FunctionalAssignment6/Assignment6Template/Assignment6Template.fsproj",
+  "expectedPackageFiles": [
+    "/Users/adrian/.nuget/packages/fsharp.core/5.0.0/fsharp.core.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
